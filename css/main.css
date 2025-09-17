@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+
+/* header */
+header {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    margin: 5% 0 5% 0;
+    padding: 10px 2em 0 2em;
+}
+
+.logo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.logo-text {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: 24px;
+}
+
+.app-navbar ul  {
+    display: inline-flex;
+    gap: 36px;
+    margin: 10px 0 0 0 ;
+
+}
+
+ul li {
+    list-style: none;
+    font-family: "Inter";
+    font-size: 24px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+#task-entry {
+    width: 80%;
+    display: flex;
+    gap: 20px;
+}
+
+#input-entry {
+    width: 50%;
+}
+/* input box */
+#input-entry #input-entry-value {
+    width: 100%;
+}
+/* all btns */
+.btn {
+    width: 92px;
+    background-color: bisque;
+}
+
