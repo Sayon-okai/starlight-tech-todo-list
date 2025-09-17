@@ -99,6 +99,17 @@ a {
     color: #fff;
    
 }
+.active-task-btn {
+    width: 92px;
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    background-color: #54C1AD;
+    color: #fff;
+   
+}
+
+
 .pending-btn {
     background-color: #FDBF46;
     color: #fff;
@@ -112,6 +123,19 @@ a {
     color: #fff;
 }
 
+
+/* Icons */
+.trash-icon {
+    
+}
+.circle-icon {
+       float: left;
+       margin-right: 10px;
+
+}
+.trash-icon {
+
+}
 
 .active-title {
     display: inline-flex;
@@ -160,9 +184,14 @@ h6 {
     font-family: "Inter", Arial, Helvetica, sans-serif;
     font-weight: 100;
     font-size: 19px;
-  border: 1px solid #A3A3B9;
-  border-radius: 44px;
-  padding: 19.5px 36px 19.5px 36px;
+
 
 }
+
+#active-task ul {
+    border: 1px solid #A3A3B9;
+        border-radius: 44px;
+        padding: 19.5px 36px 19.5px 36px;
+}
+
 

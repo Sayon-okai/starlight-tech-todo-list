@@ -9,6 +9,8 @@ let activeBtn = document.querySelector(".active-btn");
 let pendingBtn = document.querySelector(".pending-btn");
 let closedBtn = document.querySelector(".closed-btn");
 let addBtn = document.querySelector(".add-btn");
+// Select delivery date
+let SelectDeliveryDate = document.getElementById("select-delivery-date");
 
 // get the active task container
 const activeTask = document.getElementById("active-task")
@@ -46,37 +48,86 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
 function addTaskToList() {
 // current date
     const currentDate = new Date().toLocaleDateString("en-US");
-    
-    // create element 
+    const deliveryDate = SelectDeliveryDate.value;
+    // create current date element 
     const currentDateDiv = document.createElement("div");
        currentDateDiv.className = 'creation-date'
     currentDateDiv.textContent = currentDate;
 
-    const creationDate = "creation date"
+    const creationDate = "creation date";
     const createDateElement = document.createElement("h6")
-          createDateElement.textContent = creationDate
+    createDateElement.textContent = creationDate;
+
+    // Create delivery date element
+    const deliveryDateText = "delivery date";
+    const deliveryDateElement = document.createElement("h6")
+    deliveryDateElement.textContent = deliveryDateText;
+    
+    const deliveryDateDiv = document.createElement("div");
+    deliveryDateDiv.className = 'delivery-date';
+    deliveryDateDiv.textContent = deliveryDate;
+
+    // create status button
+    const activeTaskBtn = document.createElement("button");
+    activeTaskBtn.className = (".active-task-btn");
+    activeTaskBtn.textContent = "active";
+
+    
+
 
 // Create elements
 const ul = document.createElement("ul");
 const li = document.createElement("li");
 li.className = "task";
-
+ 
+    // create circle icon div
+    const circleDiv = document.createElement("div");
+    circleDiv.className = "circle-icon";
+    circleDiv.innerHTML = circleIcon;
+ 
+    // create pencil icon div
+    const pencilDiv = document.createElement("div");
+    pencilDiv.className = "pencil-icon";
+    pencilDiv.innerHTML = pencilIcon;
+ 
+    // create trash icon div
+    const trashDiv = document.createElement("div");
+    trashDiv.className = "trash-icon";
+    trashDiv.innerHTML = trashIcon;
+    
 //  task name div
 const taskNameDiv = document.createElement("div");
 taskNameDiv.className = "task-name";
 taskNameDiv.textContent = inputEntryValue.value; 
 
     activeTask.appendChild(ul);
+    ul.appendChild(circleDiv);
     ul.appendChild(li);
     li.appendChild(taskNameDiv);
     li.appendChild(currentDateDiv);
     currentDateDiv.appendChild(createDateElement);
+    li.appendChild(deliveryDateDiv);
+    deliveryDateDiv.appendChild(deliveryDateElement);
+    li.appendChild(pencilDiv);
+    pencilDiv.appendChild(pencilIcon);
+    li.appendChild(trashDiv);
+    trashDiv.appendChild(trashIcon);
 
 
 
+    inputEntryValue.value = "";
+    SelectDeliveryDate.value = currentDate;
+
+  
 }
 
 
+// insert circle icon
+function addCircleIcon() {
+    if (document.querySelector(".task").insertAdjacentHTML("beforebegin", circleIcon) === document.querySelector(".task").insertAdjacentHTML("beforebegin", circleIcon)) {
+        document.querySelector(".task").insertAdjacentHTML("beforebegin", circleIcon);
+    } 
+}
 
 
 
