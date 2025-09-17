@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Task Tracker</title>
+</head>
+<body>
+   <header class="container">
+     <span class="logo">
+        <!-- Todo:  check icon to be added-->
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="#FDBF46" class="bi bi-check-circle"
+                viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                <path
+                    d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+        
+        </svg> </i> <h1 class="logo-text">Starlight Tech</h1>
+     </span>
+       <nav class="app-navbar">
+           <ul>
+               <li class="nav-links todo-link">
+                    <a href="#">ToDo List</a>
+               </li>
+
+                <li class="nav-links prefil-link">
+                    <a href="#">Prefil</a>
+                </li>
+           </ul>
+       </nav>
+   </header>
+
+   <main class="container">
+    <!-- Task entry section -->
+    <div id="task-entry">
+        <div id="input-entry">
+            <input type="search" id="input-entry-value" dataset-name="task-entry-value" placeholder="task entry box" required>
+        </div>
+        <div id="task-status-btn">
+            <button class="btn active-btn">active</button>
+            <button class="btn pending-btn">pending</button>
+            <button class="btn closed-btn">closed</button>
+            <button class="btn add-btn">
+                <!-- Todo: add task icon Bootstrap -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus"
+                    viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                </svg>add
+                 
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Task sections -->
+      <div id="active-task">
+
+      </div> 
+
+
+   </main>
+
+
+    <!-- app.js -->
+     <script src="./js/app.js"></script>
+    <!-- Bootstrap CDN JS link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
