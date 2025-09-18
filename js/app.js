@@ -48,7 +48,7 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
 function addTaskToList() {
 // current date
     const currentDate = new Date().toLocaleDateString("en-US");
-    const deliveryDate = SelectDeliveryDate.value;
+    const deliveryDate =  SelectDeliveryDate.value;
     // create current date element 
     const currentDateDiv = document.createElement("div");
        currentDateDiv.className = 'creation-date'
@@ -57,6 +57,11 @@ function addTaskToList() {
     const creationDate = "creation date";
     const createDateElement = document.createElement("h6")
     createDateElement.textContent = creationDate;
+
+        // create delivery date section
+    const creationDateSec = document.createElement('div');
+    creationDateSec.className = 'creation-date-sec';
+
 
     // Create delivery date element
     const deliveryDateText = "delivery date";
@@ -67,11 +72,27 @@ function addTaskToList() {
     deliveryDateDiv.className = 'delivery-date';
     deliveryDateDiv.textContent = deliveryDate;
 
+    // create delivery date section
+    const deliveryDateSec = document.createElement('div');
+    deliveryDateSec.className = 'delivery-date-sec';
+
+
+
+
+     const status = "status";
+    const createStatusElement = document.createElement("h6")
+    createStatusElement.textContent = status;
+          
     // create status button
     const activeTaskBtn = document.createElement("button");
-    activeTaskBtn.className = (".active-task-btn");
+    activeTaskBtn.className = ("active-task-btn");
     activeTaskBtn.textContent = "active";
 
+        // Create status div
+    const taskStatusDiv = document.createElement('div');
+    taskStatusDiv.className = "task-status";
+
+  
     
 
 
@@ -94,6 +115,10 @@ li.className = "task";
     const trashDiv = document.createElement("div");
     trashDiv.className = "trash-icon";
     trashDiv.innerHTML = trashIcon;
+
+     // create control-btn
+    const controlBtn = document.createElement("div");
+    controlBtn.className = "control-btn";
     
 //  task name div
 const taskNameDiv = document.createElement("div");
@@ -104,14 +129,19 @@ taskNameDiv.textContent = inputEntryValue.value;
     ul.appendChild(circleDiv);
     ul.appendChild(li);
     li.appendChild(taskNameDiv);
-    li.appendChild(currentDateDiv);
-    currentDateDiv.appendChild(createDateElement);
-    li.appendChild(deliveryDateDiv);
-    deliveryDateDiv.appendChild(deliveryDateElement);
-    li.appendChild(pencilDiv);
-    pencilDiv.appendChild(pencilIcon);
-    li.appendChild(trashDiv);
-    trashDiv.appendChild(trashIcon);
+    li.appendChild(creationDateSec);
+    creationDateSec.appendChild(createDateElement);
+    creationDateSec.appendChild(currentDateDiv);
+    li.appendChild(deliveryDateSec);
+    deliveryDateSec.appendChild(deliveryDateElement);
+    deliveryDateSec.appendChild(deliveryDateDiv)
+    li.appendChild(taskStatusDiv);
+    taskStatusDiv.appendChild(createStatusElement);
+    taskStatusDiv.appendChild(activeTaskBtn);
+    li.appendChild(controlBtn);
+    controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv) ;
+    pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
+     
 
 
 

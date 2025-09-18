@@ -123,10 +123,15 @@ a {
     color: #fff;
 }
 
-
+.control-btn {
+    display: flex;
+    gap: 30px;
+   
+}
 /* Icons */
-.trash-icon {
-    
+.trash-icon:hover {
+    cursor: pointer;
+    margin-top: -15px;
 }
 .circle-icon {
        float: left;
