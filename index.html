@@ -43,10 +43,10 @@
         </div>
 
         <div id="task-status-btn">
-            <button class="btn active-btn">active</button>
+            <button class="btn active-btn" onclick="addActiveTaskToList();">active</button>
             <button class="btn pending-btn">pending</button>
             <button class="btn closed-btn">closed</button>
-            <button type="submit" class="btn add-btn " onclick="addTaskToList();">
+            <button type="submit" class="btn add-btn " >
                 <!-- Todo: add task icon Bootstrap -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus"
                     viewBox="0 0 16 16">
@@ -69,6 +69,17 @@
       <div id="active-task">
           <!-- Content here wil be added dynamically -->
        </div>
+
+       <!-- Pending task -->
+      <h3 class="pending-title">pending</h3>
+      <hr>
+      <div id="pending-task">
+          <!-- Content here wil be added dynamically -->
+
+       </div>
+
+
+
 
    </main>
 

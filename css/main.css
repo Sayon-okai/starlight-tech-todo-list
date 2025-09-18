@@ -138,8 +138,9 @@ a {
        margin-right: 10px;
 
 }
-.trash-icon {
-
+.pencil-icon:hover {
+         cursor: pointer;
+        margin-top: -15px;
 }
 
 .active-title {
@@ -199,4 +200,45 @@ h6 {
         padding: 19.5px 36px 19.5px 36px;
 }
 
+
+/* Pending task */
+
+.pending-title {
+    display: inline-flex;
+    width: 94px;
+    height: 42px;
+    padding: 9.5px 0 9.5px 0;
+    justify-content: center;
+    background-color: #FDBF46;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: 19px;
+    color: #fff;
+    border-radius: 1187.5px;
+
+}
+
+hr {
+    position: relative;
+    margin: -30px 0 57px 93px;
+    width: 90%;
+    color: #A3A3B9;
+
+}
+
+#pending-task ul li {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: disc;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 19px;
+
+
+}
+
+#pending-task ul {
+    border: 1px solid #A3A3B9;
+    border-radius: 44px;
+    padding: 19.5px 36px 19.5px 36px;
+}
 
