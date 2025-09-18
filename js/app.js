@@ -8,10 +8,11 @@ let pendingBtn = document.querySelector(".pending-btn");
 let closedBtn = document.querySelector(".closed-btn");
 let addBtn = document.querySelector(".add-btn");
 // Select delivery date
-let SelectDeliveryDate = document.getElementById("select-delivery-date").toLocaleDateString("en-US");
+let SelectDeliveryDate = document.getElementById("select-delivery-date");
 
 // get the active task container
 const activeTask = document.getElementById("active-task");
+// Get pending task container
 const pendingTask = document.getElementById("pending-task");
 
 // Getting icons
@@ -39,83 +40,88 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
                     </svg>`;
 
 
+
+activeBtn.addEventListener('click', addActiveTaskToList)
+pendingBtn.addEventListener('click', addPendingTaskToList)
+
 function addActiveTaskToList() {
 
+    
 
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
 
-    if (inputEntryValue.value.length > 3 &&  SelectDeliveryDate >= new Date().toLocaleDateString("en-US"))  {
+    if (inputEntryValue.value.length > 3)  {
 
         // current date
-    const currentDate = new Date().toLocaleDateString("en-US");
-        const deliveryDate = SelectDeliveryDate.value;
+    let currentDate = new Date().toLocaleDateString("en-US");
+        let deliveryDate = SelectDeliveryDate.value;
 
         // create current date element 
-        const currentDateDiv = document.createElement("div");
+        let currentDateDiv = document.createElement("div");
         currentDateDiv.className = 'creation-date'
         currentDateDiv.textContent = currentDate;
 
-        const creationDate = "creation date";
-        const createDateElement = document.createElement("h6")
+        let creationDate = "creation date";
+        let createDateElement = document.createElement("h6")
         createDateElement.textContent = creationDate;
 
         // create delivery date section
-        const creationDateSec = document.createElement('div');
+        let creationDateSec = document.createElement('div');
         creationDateSec.className = 'creation-date-sec';
 
 
         // Create delivery date element
-        const deliveryDateText = "delivery date";
-        const deliveryDateElement = document.createElement("h6")
+        let deliveryDateText = "delivery date";
+        let deliveryDateElement = document.createElement("h6")
         deliveryDateElement.textContent = deliveryDateText;
     
-        const deliveryDateDiv = document.createElement("div");
+        let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
         deliveryDateDiv.textContent = deliveryDate;
 
         // create delivery date section
-        const deliveryDateSec = document.createElement('div');
+        let deliveryDateSec = document.createElement('div');
         deliveryDateSec.className = 'delivery-date-sec';
 
-        const status = "status";
-        const createStatusElement = document.createElement("h6")
+        let status = "status";
+        let createStatusElement = document.createElement("h6")
         createStatusElement.textContent = status;
           
         // create status button
-        const activeTaskBtn = document.createElement("button");
+        let activeTaskBtn = document.createElement("button");
         activeTaskBtn.className = ("active-task-btn");
         activeTaskBtn.textContent = "active";
 
         // Create status div
-        const taskStatusDiv = document.createElement('div');
+        let taskStatusDiv = document.createElement('div');
         taskStatusDiv.className = "task-status";
 
         // Create elements
-        const ul = document.createElement("ul");
-        const li = document.createElement("li");
+        let ul = document.createElement("ul");
+        let li = document.createElement("li");
         li.className = "task";
  
         // create circle icon div
-        const circleDiv = document.createElement("div");
+        let circleDiv = document.createElement("div");
         circleDiv.className = "circle-icon";
         circleDiv.innerHTML = circleIcon;
  
         // create pencil icon div
-        const pencilDiv = document.createElement("div");
+        let pencilDiv = document.createElement("div");
         pencilDiv.className = "pencil-icon";
         pencilDiv.innerHTML = pencilIcon;
  
         // create trash icon div
-        const trashDiv = document.createElement("div");
+        let trashDiv = document.createElement("div");
         trashDiv.className = "trash-icon";
         trashDiv.innerHTML = trashIcon;
 
         // create control-btn
-        const controlBtn = document.createElement("div");
+        let controlBtn = document.createElement("div");
         controlBtn.className = "control-btn";
     
         //  task name div
-        const taskNameDiv = document.createElement("div");
+        let taskNameDiv = document.createElement("div");
         taskNameDiv.className = "task-name";
         taskNameDiv.textContent = inputEntryValue.value;
 
@@ -156,43 +162,106 @@ function addActiveTaskToList() {
 function addPendingTaskToList() {
    
 
+  // current date
+    let currentDate = new Date().toLocaleDateString("en-US");
+        let deliveryDate = SelectDeliveryDate.value;
 
-    pendingTask.appendChild(ul);
-    ul.appendChild(circleDiv);
-    ul.appendChild(li);
-    li.appendChild(taskNameDiv);
-    li.appendChild(creationDateSec);
-    creationDateSec.appendChild(createDateElement);
-    creationDateSec.appendChild(currentDateDiv);
-    li.appendChild(deliveryDateSec);
-    deliveryDateSec.appendChild(deliveryDateElement);
-    deliveryDateSec.appendChild(deliveryDateDiv)
-    li.appendChild(taskStatusDiv);
-    taskStatusDiv.appendChild(createStatusElement);
-    taskStatusDiv.appendChild(activeTaskBtn);
-    li.appendChild(controlBtn);
-    controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv) ;
-    pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
+        // create current date element 
+        let currentDateDiv = document.createElement("div");
+        currentDateDiv.className = 'creation-date'
+        currentDateDiv.textContent = currentDate;
+
+        let creationDate = "creation date";
+        let createDateElement = document.createElement("h6")
+        createDateElement.textContent = creationDate;
+
+        // create delivery date section
+        let creationDateSec = document.createElement('div');
+        creationDateSec.className = 'creation-date-sec';
+
+
+        // Create delivery date element
+        let deliveryDateText = "delivery date";
+        let deliveryDateElement = document.createElement("h6")
+        deliveryDateElement.textContent = deliveryDateText;
+    
+        let deliveryDateDiv = document.createElement("div");
+        deliveryDateDiv.className = 'delivery-date';
+        deliveryDateDiv.textContent = deliveryDate;
+
+        // create delivery date section
+        let deliveryDateSec = document.createElement('div');
+        deliveryDateSec.className = 'delivery-date-sec';
+
+        let status = "status";
+        let createStatusElement = document.createElement("h6")
+        createStatusElement.textContent = status;
+          
+        // create status button
+        let activeTaskBtn = document.createElement("button");
+        activeTaskBtn.className = ("active-task-btn");
+        activeTaskBtn.textContent = "active";
+
+        // Create status div
+        let taskStatusDiv = document.createElement('div');
+        taskStatusDiv.className = "task-status";
+
+        // Create elements
+        let ul = document.createElement("ul");
+        let li = document.createElement("li");
+        li.className = "task";
+ 
+        // create circle icon div
+        let circleDiv = document.createElement("div");
+        circleDiv.className = "circle-icon";
+        circleDiv.innerHTML = circleIcon;
+ 
+        // create pencil icon div
+        let pencilDiv = document.createElement("div");
+        pencilDiv.className = "pencil-icon";
+        pencilDiv.innerHTML = pencilIcon;
+ 
+        // create trash icon div
+        let trashDiv = document.createElement("div");
+        trashDiv.className = "trash-icon";
+        trashDiv.innerHTML = trashIcon;
+
+        // create control-btn
+        let controlBtn = document.createElement("div");
+        controlBtn.className = "control-btn";
+    
+        //  task name div
+        let taskNameDiv = document.createElement("div");
+        taskNameDiv.className = "task-name";
+        taskNameDiv.textContent = inputEntryValue.value;
+
+
+
+        pendingTask.appendChild(ul);
+        ul.appendChild(circleDiv);
+        ul.appendChild(li);
+        li.appendChild(taskNameDiv);
+        li.appendChild(creationDateSec);
+        creationDateSec.appendChild(createDateElement);
+        creationDateSec.appendChild(currentDateDiv);
+        li.appendChild(deliveryDateSec);
+        deliveryDateSec.appendChild(deliveryDateElement);
+        deliveryDateSec.appendChild(deliveryDateDiv)
+        li.appendChild(taskStatusDiv);
+        taskStatusDiv.appendChild(createStatusElement);
+        taskStatusDiv.appendChild(activeTaskBtn);
+        li.appendChild(controlBtn);
+        controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
+        pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
      
 
 
 
-    inputEntryValue.value = "";
-    SelectDeliveryDate.value = "mm/dd/yyyy";
-
-        createDefaultElement();
+        inputEntryValue.value = "";
+        SelectDeliveryDate.value = "mm/dd/yyyy";
+    
 
   
 }
 
 
-
-// Lets create another function that will keep all the default js for reusability 
-
-
-function createDefaultElement() {
-   
-
-    return;
-    
-}
