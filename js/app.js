@@ -45,18 +45,63 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
 activeBtn.addEventListener('click', addActiveTaskToList)
 pendingBtn.addEventListener('click', addPendingTaskToList)
 
+// Save a new task
+function saveTask(task) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || []; // get existing tasks
+  tasks.push(task); // add new one
+  localStorage.setItem("tasks", JSON.stringify(tasks)); // save back
+}
+
+      function saveTaskToLocalStorage(task, key) {
+        let tasks = JSON.parse(localStorage.getItem(key)) || [];
+        tasks.push(task);
+        localStorage.setItem(key, JSON.stringify(tasks));
+}
+
+
 function addActiveTaskToList() {
 
-    
-   // current date
+      // current date
     let currentDate = new Date().toLocaleDateString("en-US");
     let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
-         
+      
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
 
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate ||deliveryDate < maxDate.toLocaleDateString("en-US"))  {
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate || deliveryDate < maxDate.toLocaleDateString("en-US")) {
 
+         const task = { 
+         name: inputEntryValue.value,
+         creationDate: currentDate,
+         deliveryDate: deliveryDate,
+         status: "active",
+         taskCircleIcon: circleIcon,
+         taskPencilIcon: pencilIcon;
+         taskTrashIcon: trashIcon,
+         
+       
+         }
+        
+        return renderActiveTask;
      
+        
+    } else {
+        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
+
+        console.log("User didn't input the correct data");
+        
+    }
+
+      
+   
+}
+
+// Save it
+saveTaskToLocalStorage(task, "activeTasks");
+
+function renderActiveTask(task) {
+  // build DOM elements here (same as you did before)
+    // but instead of inputEntryValue.value, use task.name, task.creationDate, task.deliveryDate
+
 
         // create current date element 
         let currentDateDiv = document.createElement("div");
@@ -146,18 +191,13 @@ function addActiveTaskToList() {
         controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
         pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
      
+    
+    
+        inputEntryValue.value = "";   // clear text input
+        deliveryDateValue.value = ""; // clear date input
+    
+    
 
-
-        inputEntryValue.value = "";
-        deliveryDateValue.value = "mm/dd/yyyy";
-        
-    } else {
-        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
-
-        console.log("User didn't input the correct data");
-        
-    }
-   
 }
 
 
