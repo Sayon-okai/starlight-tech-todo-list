@@ -9,6 +9,8 @@ let closedBtn = document.querySelector(".closed-btn");
 let addBtn = document.querySelector(".add-btn");
 // Select delivery date
 let deliveryDateValue = document.querySelector("#select-delivery-date");
+// Date supported 
+const maxDate = new Date("2027-12-31");
 
 // get the active task container
 const activeTask = document.getElementById("active-task");
@@ -40,7 +42,6 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
                     </svg>`;
 
 
-
 activeBtn.addEventListener('click', addActiveTaskToList)
 pendingBtn.addEventListener('click', addPendingTaskToList)
 
@@ -53,7 +54,7 @@ function addActiveTaskToList() {
          
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
 
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate)  {
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate ||deliveryDate < maxDate.toLocaleDateString("en-US"))  {
 
      
 
@@ -147,9 +148,9 @@ function addActiveTaskToList() {
      
 
 
-
         inputEntryValue.value = "";
         deliveryDateValue.value = "mm/dd/yyyy";
+        
     } else {
         alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
 
@@ -165,7 +166,7 @@ function addPendingTaskToList() {
     let currentDate = new Date().toLocaleDateString("en-US");
     let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
 
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate) {
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate ||deliveryDate < maxDate.toLocaleDateString("en-US") ) {
         // create current date element 
         let currentDateDiv = document.createElement("div");
         currentDateDiv.className = 'creation-date'
