@@ -251,9 +251,10 @@ h6 {
 
 }
 
-.pending-task .circle-icon{
+
+#pending-task .circle-icon{
     float: left;
-    text-align: center;
+    padding-top: 0.43em;
     margin-right: 10px;
 
 }
