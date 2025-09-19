@@ -47,14 +47,15 @@ pendingBtn.addEventListener('click', addPendingTaskToList)
 function addActiveTaskToList() {
 
     
-
+   // current date
+    let currentDate = new Date().toLocaleDateString("en-US");
+    let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
+         
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
 
-    if (inputEntryValue.value.length > 3)  {
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate)  {
 
-        // current date
-    let currentDate = new Date().toLocaleDateString("en-US");
-        let deliveryDate = deliveryDateValue.value;
+     
 
         // create current date element 
         let currentDateDiv = document.createElement("div");
@@ -150,7 +151,7 @@ function addActiveTaskToList() {
         inputEntryValue.value = "";
         deliveryDateValue.value = "mm/dd/yyyy";
     } else {
-        alert(`Please enter task in the box and make sure delivery is less greater the or equal to today's date`)
+        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
 
         console.log("User didn't input the correct data");
         
@@ -160,12 +161,11 @@ function addActiveTaskToList() {
 
 
 function addPendingTaskToList() {
-   
-
-  // current date
+   // current date
     let currentDate = new Date().toLocaleDateString("en-US");
-        let deliveryDate = deliveryDateValue.value;
+    let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
 
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate) {
         // create current date element 
         let currentDateDiv = document.createElement("div");
         currentDateDiv.className = 'creation-date'
@@ -260,7 +260,12 @@ function addPendingTaskToList() {
         inputEntryValue.value = "";
         deliveryDateValue.value = "mm/dd/yyyy";
     
+    } else {
+        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
 
+        console.log("User didn't input the correct data");
+        
+    }
   
 }
 
