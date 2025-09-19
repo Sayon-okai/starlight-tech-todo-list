@@ -8,7 +8,7 @@ let pendingBtn = document.querySelector(".pending-btn");
 let closedBtn = document.querySelector(".closed-btn");
 let addBtn = document.querySelector(".add-btn");
 // Select delivery date
-let SelectDeliveryDate = document.getElementById("select-delivery-date");
+let deliveryDateValue = document.querySelector("#select-delivery-date");
 
 // get the active task container
 const activeTask = document.getElementById("active-task");
@@ -54,7 +54,7 @@ function addActiveTaskToList() {
 
         // current date
     let currentDate = new Date().toLocaleDateString("en-US");
-        let deliveryDate = SelectDeliveryDate.value;
+        let deliveryDate = deliveryDateValue.value;
 
         // create current date element 
         let currentDateDiv = document.createElement("div");
@@ -77,7 +77,7 @@ function addActiveTaskToList() {
     
         let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
-        deliveryDateDiv.textContent = deliveryDate;
+        deliveryDateDiv.textContent = new Date(deliveryDate).toLocaleDateString("en-US");
 
         // create delivery date section
         let deliveryDateSec = document.createElement('div');
@@ -148,7 +148,7 @@ function addActiveTaskToList() {
 
 
         inputEntryValue.value = "";
-        SelectDeliveryDate.value = "mm/dd/yyyy";
+        deliveryDateValue.value = "mm/dd/yyyy";
     } else {
         alert(`Please enter task in the box and make sure delivery is less greater the or equal to today's date`)
 
@@ -164,7 +164,7 @@ function addPendingTaskToList() {
 
   // current date
     let currentDate = new Date().toLocaleDateString("en-US");
-        let deliveryDate = SelectDeliveryDate.value;
+        let deliveryDate = deliveryDateValue.value;
 
         // create current date element 
         let currentDateDiv = document.createElement("div");
@@ -178,7 +178,7 @@ function addPendingTaskToList() {
         // create delivery date section
         let creationDateSec = document.createElement('div');
         creationDateSec.className = 'creation-date-sec';
-
+          
 
         // Create delivery date element
         let deliveryDateText = "delivery date";
@@ -187,7 +187,7 @@ function addPendingTaskToList() {
     
         let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
-        deliveryDateDiv.textContent = deliveryDate;
+        deliveryDateDiv.textContent = new Date(deliveryDate).toLocaleDateString("en-US");
 
         // create delivery date section
         let deliveryDateSec = document.createElement('div');
@@ -258,7 +258,7 @@ function addPendingTaskToList() {
  
 
         inputEntryValue.value = "";
-        SelectDeliveryDate.value = "mm/dd/yyyy";
+        deliveryDateValue.value = "mm/dd/yyyy";
     
 
   
