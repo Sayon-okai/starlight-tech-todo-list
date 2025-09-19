@@ -46,11 +46,16 @@ a {
 }
 
 #task-entry {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     margin-bottom: 5%;
+}
+
+.task-name {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-family: 800px;
 }
 
 #input-entry {
@@ -114,6 +119,7 @@ a {
     background-color: #FDBF46;
     color: #fff;
 }
+
 .closed-btn {
     background-color: #F06A6D;
     color: #fff;
@@ -123,12 +129,33 @@ a {
     color: #fff;
 }
 
-.control-btn {
+.control-btn  {
     display: flex;
-    gap: 30px;
+    gap: 20px;
    
 }
+/*  pending status btn*/
+.pending-task-btn {
+    width: 87px;
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    background-color: #FDBF46;
+    color: #fff;
+}
+.control-btn button {
+         width: 32px;
+        height: 42px;
+        border: none;
+        background-color: none;
+}
+
+
 /* Icons */
+
+.trash-icon{
+    background: none;
+}
 .trash-icon:hover {
     cursor: pointer;
     margin-top: -15px;
@@ -138,10 +165,16 @@ a {
        margin-right: 10px;
 
 }
+.pencil-icon {
+    background: none;
+}
+
 .pencil-icon:hover {
          cursor: pointer;
         margin-top: -15px;
 }
+
+
 
 .active-title {
     display: inline-flex;
@@ -151,7 +184,8 @@ a {
     justify-content: center;
     background-color: #54C1AD;
     font-family: "Inter", Arial, Helvetica, sans-serif;
-    font-size: 19px;
+    font-size: 17px;
+    font-weight: 600px;
     color: #fff;
     border: 1px solid #A3A3B9;
     border-radius: 1187.5px;
@@ -217,6 +251,13 @@ h6 {
 
 }
 
+.pending-task .circle-icon{
+    float: left;
+    text-align: center;
+    margin-right: 10px;
+
+}
+
 hr {
     position: relative;
     margin: -30px 0 57px 93px;
@@ -231,7 +272,8 @@ hr {
     list-style-type: disc;
     font-family: "Inter", Arial, Helvetica, sans-serif;
     font-weight: 100;
-    font-size: 19px;
+    font-size: 17px;
+    margin-top: 10px;
 
 
 }

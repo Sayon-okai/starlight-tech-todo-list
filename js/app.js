@@ -107,12 +107,12 @@ function addActiveTaskToList() {
         circleDiv.innerHTML = circleIcon;
  
         // create pencil icon div
-        let pencilDiv = document.createElement("div");
+        let pencilDiv = document.createElement("button");
         pencilDiv.className = "pencil-icon";
         pencilDiv.innerHTML = pencilIcon;
  
         // create trash icon div
-        let trashDiv = document.createElement("div");
+        let trashDiv = document.createElement("button");
         trashDiv.className = "trash-icon";
         trashDiv.innerHTML = trashIcon;
 
@@ -199,8 +199,8 @@ function addPendingTaskToList() {
           
         // create status button
         let activeTaskBtn = document.createElement("button");
-        activeTaskBtn.className = ("active-task-btn");
-        activeTaskBtn.textContent = "active";
+        activeTaskBtn.className = ("pending-task-btn");
+        activeTaskBtn.textContent = "pending";
 
         // Create status div
         let taskStatusDiv = document.createElement('div');
@@ -217,12 +217,12 @@ function addPendingTaskToList() {
         circleDiv.innerHTML = circleIcon;
  
         // create pencil icon div
-        let pencilDiv = document.createElement("div");
+        let pencilDiv = document.createElement("button");
         pencilDiv.className = "pencil-icon";
         pencilDiv.innerHTML = pencilIcon;
  
         // create trash icon div
-        let trashDiv = document.createElement("div");
+        let trashDiv = document.createElement("button");
         trashDiv.className = "trash-icon";
         trashDiv.innerHTML = trashIcon;
 
@@ -255,7 +255,7 @@ function addPendingTaskToList() {
         pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
      
 
-
+ 
 
         inputEntryValue.value = "";
         SelectDeliveryDate.value = "mm/dd/yyyy";
