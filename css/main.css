@@ -124,6 +124,15 @@ a {
     background-color: #F06A6D;
     color: #fff;
 }
+
+.closed-task-btn {
+    width: 87px;
+        height: 42px;
+        border: none;
+        border-radius: 10px;
+        background-color: #F06A6D;
+        color: #fff;
+}
 .add-btn {
     background-color: #5B6097;
     color: #fff;
@@ -148,6 +157,7 @@ a {
         height: 42px;
         border: none;
         background-color: none;
+        
 }
 
 
@@ -176,13 +186,12 @@ a {
 
 
 
-.active-title {
+.active-title, .pending-title, .closed-title {
     display: inline-flex;
     width: 94px;
     height: 42px;
     padding: 9.5px 0 9.5px 0;
     justify-content: center;
-    background-color: #54C1AD;
     font-family: "Inter", Arial, Helvetica, sans-serif;
     font-size: 17px;
     font-weight: 600px;
@@ -191,6 +200,16 @@ a {
     border-radius: 1187.5px;
  
 }
+
+.active-title{
+    background-color: #54C1AD;
+}
+.pending-title {
+        background-color: #FDBF46;
+    }
+.closed-title {
+        background-color: #F06A6D;
+    }
 
 hr {
      position: relative;
@@ -217,7 +236,7 @@ h6 {
 
 
 
-#active-task ul li {
+#active-task ul li, #closed-task ul li {
   display: flex;
   justify-content: space-between;
   list-style-type: disc;
@@ -228,7 +247,7 @@ h6 {
 
 }
 
-#active-task ul {
+#active-task ul, #closed-task ul {
     border: 1px solid #A3A3B9;
         border-radius: 44px;
         padding: 19.5px 36px 19.5px 36px;
@@ -237,19 +256,6 @@ h6 {
 
 /* Pending task */
 
-.pending-title {
-    display: inline-flex;
-    width: 94px;
-    height: 42px;
-    padding: 9.5px 0 9.5px 0;
-    justify-content: center;
-    background-color: #FDBF46;
-    font-family: "Inter", Arial, Helvetica, sans-serif;
-    font-size: 19px;
-    color: #fff;
-    border-radius: 1187.5px;
-
-}
 
 
 #pending-task .circle-icon{

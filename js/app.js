@@ -11,13 +11,14 @@ let addBtn = document.querySelector(".add-btn");
 // Select delivery date
 let deliveryDateValue = document.querySelector("#select-delivery-date");
 // Date supported 
-const maxDate = new Date("2027-12-31");
+const maxDate = new Date("2027-12-31").toLocaleDateString("en-US");
 
 // get the active task container
 const activeTask = document.getElementById("active-task");
 // Get pending task container
 const pendingTask = document.getElementById("pending-task");
-
+// Getting closed task container
+const closedTask = document.getElementById("closed-task")
 // clear tasks from local storage 
 let clearTaskBtn = document.querySelector("#clear-task");
 // Getting icons
@@ -47,10 +48,11 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
 
 activeBtn.addEventListener('click', addActiveTaskToList);
 pendingBtn.addEventListener('click', addPendingTaskToList);
-clearTaskBtn.addEventListener('click', clearTasksFromLocalStorage);
+closedBtn.addEventListener('click', addTaskToClosedList);
 
 
 
+// Create active task
 function addActiveTaskToList() {
 
         // current date
@@ -60,10 +62,10 @@ function addActiveTaskToList() {
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
     // validation
 if (
-  inputEntryValue.value.length > 3 && 
-  deliveryDate instanceof Date &&
-  currentDate <= deliveryDate ||                         // not before today
-  deliveryDate <= maxDate.toLocaleDateString("en-US")                                // not after 2027
+   inputEntryValue.value.length > 3 ||       // task name at least 3 chars
+   deliveryDate instanceof Date &&  // valid date
+   deliveryDate >= currentDate  &&           // not before today
+   deliveryDate <= maxDate // not after 2027
 ) {
           const task = { 
          name: inputEntryValue.value,
@@ -94,16 +96,7 @@ if (
    
 }
 
-function deleteTaskFromLocalStorage(taskName, key) {
-  let tasks = JSON.parse(localStorage.getItem(key)) || [];
-
-  // filter out the task by name
-  tasks = tasks.filter(task => task.name !== taskName);
-
-  // save back to localStorage
-  localStorage.setItem(key, JSON.stringify(tasks));
-}
-
+// render active task
 function renderActiveTask(task) {
   // build DOM elements here (same as you did before)
     // but instead of inputEntryValue.value, use task.name, task.creationDate, task.deliveryDate
@@ -131,12 +124,24 @@ function renderActiveTask(task) {
         let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
         deliveryDateDiv.textContent = new Date(task.deliveryDate).toLocaleDateString("en-US");
-
+    
+    
+        //  task name div
+        let taskNameDiv = document.createElement("div");
+        taskNameDiv.className = "task-name";
+        taskNameDiv.textContent = task.name;
+    
+       // check if date is invalid  
+    if (task.deliveryDate === "Invalid Date") {
+        deliveryDateDiv.textContent = task.deliveryDate + "!";
+        deliveryDateDiv.style.color = "red";
+        deliveryDateDiv.style.fontWeight = "bold";
+        taskNameDiv.style.textDecoration = "line-through"
+    }
         // create delivery date section
         let deliveryDateSec = document.createElement('div');
         deliveryDateSec.className = 'delivery-date-sec';
 
-        let status = "status";
         let createStatusElement = document.createElement("h6")
         createStatusElement.textContent = task.status;
           
@@ -181,10 +186,6 @@ function renderActiveTask(task) {
         let controlBtn = document.createElement("div");
         controlBtn.className = "control-btn";
     
-        //  task name div
-        let taskNameDiv = document.createElement("div");
-        taskNameDiv.className = "task-name";
-        taskNameDiv.textContent = task.name;
 
 
 
@@ -215,6 +216,7 @@ function renderActiveTask(task) {
 }
 
 
+// Create pending task
 function addPendingTaskToList() {
 
 
@@ -225,7 +227,9 @@ function addPendingTaskToList() {
 
 
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate || deliveryDate < maxDate.toLocaleDateString("en-US")) if (deliveryDate !== "Invalid Date") {
+    if (inputEntryValue.value.length > 3 &&
+        currentDate <= deliveryDate ||
+         deliveryDate < maxDate ) {
 
         const task = {
             name: inputEntryValue.value,
@@ -238,11 +242,17 @@ function addPendingTaskToList() {
          
        
         }
+
+           // Render UI
+        renderPendingTask(task);
+        
+
         // Save it
         saveTaskToLocalStorage(task, "pendingTask");
 
-        // Render UI
-        renderPendingTask(task);
+
+     
+    
 
         
     } else {
@@ -253,7 +263,169 @@ function addPendingTaskToList() {
     }
 }
 
+// render pending task
 function renderPendingTask(task) {
+    // build DOM elements here (same as you did before)
+    // but instead of inputEntryValue.value, use task.name, task.creationDate, task.deliveryDate
+
+
+    // create current date element 
+    let currentDateDiv = document.createElement("div");
+    currentDateDiv.className = 'creation-date'
+    currentDateDiv.textContent = task.creationDate;
+
+    let creationDateText = "creation date";
+    let createDateElement = document.createElement("h6")
+    createDateElement.textContent = creationDateText;
+
+    // create delivery date section
+    let creationDateSec = document.createElement('div');
+    creationDateSec.className = 'creation-date-sec';
+
+
+    // Create delivery date element
+    let deliveryDateText = "delivery date";
+    let deliveryDateElement = document.createElement("h6")
+    deliveryDateElement.textContent = deliveryDateText;
+    
+    let deliveryDateDiv = document.createElement("div");
+    deliveryDateDiv.className = 'delivery-date';
+    deliveryDateDiv.textContent = new Date(task.deliveryDate).toLocaleDateString("en-US");
+
+        //  task name div
+    let taskNameDiv = document.createElement("div");
+    taskNameDiv.className = "task-name";
+    taskNameDiv.textContent = task.name;
+
+   
+    // check if date is invalid  
+    if (task.deliveryDate === "Invalid Date") {
+        deliveryDateDiv.textContent = task.deliveryDate +  "!" ;
+        deliveryDateDiv.style.color = "red";
+        deliveryDateDiv.style.fontWeight = "bold";
+        taskNameDiv.style.textDecoration = "line-through"
+    }
+    // create delivery date section
+    let deliveryDateSec = document.createElement('div');
+    deliveryDateSec.className = 'delivery-date-sec';
+
+       
+    let createStatusElement = document.createElement("h6")
+    createStatusElement.textContent = task.status;
+          
+    // create status button
+    let pendingTaskBtn = document.createElement("button");
+    pendingTaskBtn.className = ("pending-task-btn");
+    pendingTaskBtn.textContent = task.status;
+
+    // Create status div
+    let taskStatusDiv = document.createElement('div');
+    taskStatusDiv.className = "task-status";
+    
+    // Create elements
+    let ul = document.createElement("ul");
+    let li = document.createElement("li");
+    li.className = "task";
+ 
+    // create circle icon div
+    let circleDiv = document.createElement("div");
+    circleDiv.className = "circle-icon";
+    circleDiv.innerHTML = task.taskCircleIcon;
+ 
+    // create pencil icon div
+    let pencilDiv = document.createElement("button");
+    pencilDiv.className = "pencil-icon";
+    pencilDiv.innerHTML = task.taskPencilIcon;
+ 
+    // create trash icon div
+    let trashDiv = document.createElement("button");
+    trashDiv.className = "trash-icon";
+    trashDiv.innerHTML = task.taskTrashIcon;
+    
+    // Delete a single task 
+    trashDiv.addEventListener("click", function () {
+        li.remove(); // remove from DOM
+        deleteTaskFromLocalStorage(task.name, "pendingTask");
+
+        location.reload();  //Update the UI
+    });
+
+    // create control-btn
+    let controlBtn = document.createElement("div");
+    controlBtn.className = "control-btn";
+    
+
+    pendingTask.appendChild(ul);
+    ul.appendChild(circleDiv);
+    ul.appendChild(li);
+    li.appendChild(taskNameDiv);
+    li.appendChild(creationDateSec);
+    creationDateSec.appendChild(createDateElement);
+    creationDateSec.appendChild(currentDateDiv);
+    li.appendChild(deliveryDateSec);
+    deliveryDateSec.appendChild(deliveryDateElement);
+    deliveryDateSec.appendChild(deliveryDateDiv)
+    li.appendChild(taskStatusDiv);
+    taskStatusDiv.appendChild(createStatusElement);
+    taskStatusDiv.appendChild(pendingTaskBtn);
+    li.appendChild(controlBtn);
+    controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
+        
+     
+    
+    
+    inputEntryValue.value = "";   // clear text input
+    deliveryDateValue.value = ""; // clear date input
+
+}
+
+// Closed task
+function addTaskToClosedList() {
+
+        // current date
+    let currentDate = new Date().toLocaleDateString("en-US");
+    let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
+      
+    // check if inputEntryValue field is empty && if delivery date is not less then task creation date
+    // validation
+if (
+   inputEntryValue.value.length > 3 ||       // task name at least 3 chars
+   deliveryDate instanceof Date &&  // valid date
+   deliveryDate >= currentDate  &&           // not before today
+   deliveryDate <= maxDate // not after 2027
+) {
+          const task = { 
+         name: inputEntryValue.value,
+         creationDate: currentDate,
+         deliveryDate: deliveryDate,
+         status: "closed",
+         taskCircleIcon: circleIcon,
+         taskPencilIcon: pencilIcon,
+         taskTrashIcon: trashIcon,
+         
+       
+         }
+          // Save it
+         saveTaskToLocalStorage(task, "closedTask");
+
+         // Render UI
+         renderActiveTask(task);
+
+        
+    } else {
+        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
+
+        console.log("User didn't input the correct data");
+        
+    }
+
+      
+   
+}
+
+
+// render closed task
+function renderClosedTask(task) {
   // build DOM elements here (same as you did before)
     // but instead of inputEntryValue.value, use task.name, task.creationDate, task.deliveryDate
 
@@ -280,19 +452,31 @@ function renderPendingTask(task) {
         let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
         deliveryDateDiv.textContent = new Date(task.deliveryDate).toLocaleDateString("en-US");
-
+    
+    
+        //  task name div
+        let taskNameDiv = document.createElement("div");
+        taskNameDiv.className = "task-name";
+        taskNameDiv.textContent = task.name;
+    
+       // check if date is invalid  
+    if (task.deliveryDate === "Invalid Date") {
+        deliveryDateDiv.textContent = task.deliveryDate + "!";
+        deliveryDateDiv.style.color = "red";
+        deliveryDateDiv.style.fontWeight = "bold";
+        taskNameDiv.style.textDecoration = "line-through"
+    }
         // create delivery date section
         let deliveryDateSec = document.createElement('div');
         deliveryDateSec.className = 'delivery-date-sec';
 
-        let status = "status";
         let createStatusElement = document.createElement("h6")
         createStatusElement.textContent = task.status;
           
         // create status button
-        let activeTaskBtn = document.createElement("button");
-        activeTaskBtn.className = ("active-task-btn");
-        activeTaskBtn.textContent = task.status;
+        let closedTaskBtn = document.createElement("button");
+        closedTaskBtn.className = ("closed-task-btn");
+        closedTaskBtn.textContent = task.status;
 
         // Create status div
         let taskStatusDiv = document.createElement('div');
@@ -321,7 +505,7 @@ function renderPendingTask(task) {
     // Delete a single task 
     trashDiv.addEventListener("click", function () {
      li.remove(); // remove from DOM
-        deleteTaskFromLocalStorage(task.name, "pe"); 
+        deleteTaskFromLocalStorage(task.name, "closedTask"); 
 
            location.reload();  //Update the UI
 });
@@ -330,14 +514,10 @@ function renderPendingTask(task) {
         let controlBtn = document.createElement("div");
         controlBtn.className = "control-btn";
     
-        //  task name div
-        let taskNameDiv = document.createElement("div");
-        taskNameDiv.className = "task-name";
-        taskNameDiv.textContent = task.name;
 
 
 
-        pendingTask.appendChild(ul);
+        closedTask.appendChild(ul);
         ul.appendChild(circleDiv);
         ul.appendChild(li);
         li.appendChild(taskNameDiv);
@@ -349,7 +529,7 @@ function renderPendingTask(task) {
         deliveryDateSec.appendChild(deliveryDateDiv)
         li.appendChild(taskStatusDiv);
         taskStatusDiv.appendChild(createStatusElement);
-        taskStatusDiv.appendChild(activeTaskBtn);
+        taskStatusDiv.appendChild(closedTaskBtn);
         li.appendChild(controlBtn);
         controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
         
@@ -364,7 +544,6 @@ function renderPendingTask(task) {
 }
 
 
-
 // Save a new task
 
  function saveTaskToLocalStorage(task, key) {
@@ -373,16 +552,25 @@ function renderPendingTask(task) {
         localStorage.setItem(key, JSON.stringify(tasks));
 }
 
-// clear all tasks
-function clearTasksFromLocalStorage(key) {
-  localStorage.removeItem(activeTask); // delete only that category
-//   localStorage.removeItem(activeTask);  delete only that category
-}
 
 window.onload = function () {
   let activeTasks = JSON.parse(localStorage.getItem("activeTask")) || [];
   activeTasks.forEach(task => renderActiveTask(task));
 
-  let pendingTasks = JSON.parse(localStorage.getItem("pendingTasks")) || [];
-  pendingTasks.forEach(task => renderPendingTask(task));
+  let pendingTasks = JSON.parse(localStorage.getItem("pendingTask")) || [];
+    pendingTasks.forEach(task => renderPendingTask(task));
+    
+  let closedTasks = JSON.parse(localStorage.getItem("closedTask")) || [];
+  pendingTasks.forEach(task => renderClosedTask(task));
 };
+
+
+function deleteTaskFromLocalStorage(taskName, key) {
+  let tasks = JSON.parse(localStorage.getItem(key)) || [];
+
+  // filter out the task by name
+  tasks = tasks.filter(task => task.name !== taskName);
+
+  // save back to localStorage
+  localStorage.setItem(key, JSON.stringify(tasks));
+}
