@@ -58,9 +58,14 @@ function addActiveTaskToList() {
     let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
       
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate || deliveryDate < maxDate.toLocaleDateString("en-US")) if (deliveryDate !== "Invalid Date") {
-
-         const task = { 
+    // validation
+if (
+  inputEntryValue.value.length > 3 && 
+  deliveryDate instanceof Date &&
+  currentDate <= deliveryDate ||                         // not before today
+  deliveryDate <= maxDate.toLocaleDateString("en-US")                                // not after 2027
+) {
+          const task = { 
          name: inputEntryValue.value,
          creationDate: currentDate,
          deliveryDate: deliveryDate,
@@ -211,24 +216,61 @@ function renderActiveTask(task) {
 
 
 function addPendingTaskToList() {
-   // current date
+
+
+    // current date
     let currentDate = new Date().toLocaleDateString("en-US");
     let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
 
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate ||deliveryDate < maxDate.toLocaleDateString("en-US") ) {
+
+
+    // check if inputEntryValue field is empty && if delivery date is not less then task creation date
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate || deliveryDate < maxDate.toLocaleDateString("en-US")) if (deliveryDate !== "Invalid Date") {
+
+        const task = {
+            name: inputEntryValue.value,
+            creationDate: currentDate,
+            deliveryDate: deliveryDate,
+            status: "pending",
+            taskCircleIcon: circleIcon,
+            taskPencilIcon: pencilIcon,
+            taskTrashIcon: trashIcon,
+         
+       
+        }
+        // Save it
+        saveTaskToLocalStorage(task, "pendingTask");
+
+        // Render UI
+        renderPendingTask(task);
+
+        
+    } else {
+        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
+
+        console.log("User didn't input the correct data");
+        
+    }
+}
+
+function renderPendingTask(task) {
+  // build DOM elements here (same as you did before)
+    // but instead of inputEntryValue.value, use task.name, task.creationDate, task.deliveryDate
+
+
         // create current date element 
         let currentDateDiv = document.createElement("div");
         currentDateDiv.className = 'creation-date'
-        currentDateDiv.textContent = currentDate;
+        currentDateDiv.textContent = task.creationDate;
 
-        let creationDate = "creation date";
+        let creationDateText = "creation date";
         let createDateElement = document.createElement("h6")
-        createDateElement.textContent = creationDate;
+        createDateElement.textContent = creationDateText;
 
         // create delivery date section
         let creationDateSec = document.createElement('div');
         creationDateSec.className = 'creation-date-sec';
-          
+
 
         // Create delivery date element
         let deliveryDateText = "delivery date";
@@ -237,7 +279,7 @@ function addPendingTaskToList() {
     
         let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
-        deliveryDateDiv.textContent = new Date(deliveryDate).toLocaleDateString("en-US");
+        deliveryDateDiv.textContent = new Date(task.deliveryDate).toLocaleDateString("en-US");
 
         // create delivery date section
         let deliveryDateSec = document.createElement('div');
@@ -245,17 +287,17 @@ function addPendingTaskToList() {
 
         let status = "status";
         let createStatusElement = document.createElement("h6")
-        createStatusElement.textContent = status;
+        createStatusElement.textContent = task.status;
           
         // create status button
         let activeTaskBtn = document.createElement("button");
-        activeTaskBtn.className = ("pending-task-btn");
-        activeTaskBtn.textContent = "pending";
+        activeTaskBtn.className = ("active-task-btn");
+        activeTaskBtn.textContent = task.status;
 
         // Create status div
         let taskStatusDiv = document.createElement('div');
         taskStatusDiv.className = "task-status";
-
+    
         // Create elements
         let ul = document.createElement("ul");
         let li = document.createElement("li");
@@ -264,17 +306,25 @@ function addPendingTaskToList() {
         // create circle icon div
         let circleDiv = document.createElement("div");
         circleDiv.className = "circle-icon";
-        circleDiv.innerHTML = circleIcon;
+        circleDiv.innerHTML = task.taskCircleIcon;
  
         // create pencil icon div
         let pencilDiv = document.createElement("button");
         pencilDiv.className = "pencil-icon";
-        pencilDiv.innerHTML = pencilIcon;
+        pencilDiv.innerHTML = task.taskPencilIcon;
  
         // create trash icon div
         let trashDiv = document.createElement("button");
         trashDiv.className = "trash-icon";
-        trashDiv.innerHTML = trashIcon;
+        trashDiv.innerHTML = task.taskTrashIcon;
+    
+    // Delete a single task 
+    trashDiv.addEventListener("click", function () {
+     li.remove(); // remove from DOM
+        deleteTaskFromLocalStorage(task.name, "pe"); 
+
+           location.reload();  //Update the UI
+});
 
         // create control-btn
         let controlBtn = document.createElement("div");
@@ -283,7 +333,7 @@ function addPendingTaskToList() {
         //  task name div
         let taskNameDiv = document.createElement("div");
         taskNameDiv.className = "task-name";
-        taskNameDiv.textContent = inputEntryValue.value;
+        taskNameDiv.textContent = task.name;
 
 
 
@@ -302,24 +352,16 @@ function addPendingTaskToList() {
         taskStatusDiv.appendChild(activeTaskBtn);
         li.appendChild(controlBtn);
         controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
-        pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
-     
-
- 
-
-        inputEntryValue.value = "";
-        deliveryDateValue.value = "mm/dd/yyyy";
-    
-    } else {
-        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
-
-        console.log("User didn't input the correct data");
         
-    }
-  
+     
+    
+    
+        inputEntryValue.value = "";   // clear text input
+        deliveryDateValue.value = ""; // clear date input
+    
+    
+
 }
-
-
 
 
 
