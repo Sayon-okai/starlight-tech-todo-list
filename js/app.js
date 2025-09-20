@@ -1,5 +1,6 @@
 // TODO: getting element to js
 
+
 // input
 let inputEntryValue = document.getElementById("input-entry-value");
 // Status Btns
@@ -17,6 +18,8 @@ const activeTask = document.getElementById("active-task");
 // Get pending task container
 const pendingTask = document.getElementById("pending-task");
 
+// clear tasks from local storage 
+let clearTaskBtn = document.querySelector("#clear-task");
 // Getting icons
 
 const pencilIcon = `
@@ -42,32 +45,20 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
                     </svg>`;
 
 
-activeBtn.addEventListener('click', addActiveTaskToList)
-pendingBtn.addEventListener('click', addPendingTaskToList)
+activeBtn.addEventListener('click', addActiveTaskToList);
+pendingBtn.addEventListener('click', addPendingTaskToList);
+clearTaskBtn.addEventListener('click', clearTasksFromLocalStorage);
 
-// Save a new task
-function saveTask(task) {
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || []; // get existing tasks
-  tasks.push(task); // add new one
-  localStorage.setItem("tasks", JSON.stringify(tasks)); // save back
-}
-
-      function saveTaskToLocalStorage(task, key) {
-        let tasks = JSON.parse(localStorage.getItem(key)) || [];
-        tasks.push(task);
-        localStorage.setItem(key, JSON.stringify(tasks));
-}
 
 
 function addActiveTaskToList() {
 
-      // current date
+        // current date
     let currentDate = new Date().toLocaleDateString("en-US");
     let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
       
     // check if inputEntryValue field is empty && if delivery date is not less then task creation date
-
-    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate || deliveryDate < maxDate.toLocaleDateString("en-US")) {
+    if (inputEntryValue.value.length > 3 && currentDate <= deliveryDate || deliveryDate < maxDate.toLocaleDateString("en-US")) if (deliveryDate !== "Invalid Date") {
 
          const task = { 
          name: inputEntryValue.value,
@@ -75,14 +66,17 @@ function addActiveTaskToList() {
          deliveryDate: deliveryDate,
          status: "active",
          taskCircleIcon: circleIcon,
-         taskPencilIcon: pencilIcon;
+         taskPencilIcon: pencilIcon,
          taskTrashIcon: trashIcon,
          
        
          }
-        
-        return renderActiveTask;
-     
+          // Save it
+         saveTaskToLocalStorage(task, "activeTask");
+
+         // Render UI
+         renderActiveTask(task);
+
         
     } else {
         alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
@@ -95,8 +89,15 @@ function addActiveTaskToList() {
    
 }
 
-// Save it
-saveTaskToLocalStorage(task, "activeTasks");
+function deleteTaskFromLocalStorage(taskName, key) {
+  let tasks = JSON.parse(localStorage.getItem(key)) || [];
+
+  // filter out the task by name
+  tasks = tasks.filter(task => task.name !== taskName);
+
+  // save back to localStorage
+  localStorage.setItem(key, JSON.stringify(tasks));
+}
 
 function renderActiveTask(task) {
   // build DOM elements here (same as you did before)
@@ -106,11 +107,11 @@ function renderActiveTask(task) {
         // create current date element 
         let currentDateDiv = document.createElement("div");
         currentDateDiv.className = 'creation-date'
-        currentDateDiv.textContent = currentDate;
+        currentDateDiv.textContent = task.creationDate;
 
-        let creationDate = "creation date";
+        let creationDateText = "creation date";
         let createDateElement = document.createElement("h6")
-        createDateElement.textContent = creationDate;
+        createDateElement.textContent = creationDateText;
 
         // create delivery date section
         let creationDateSec = document.createElement('div');
@@ -124,7 +125,7 @@ function renderActiveTask(task) {
     
         let deliveryDateDiv = document.createElement("div");
         deliveryDateDiv.className = 'delivery-date';
-        deliveryDateDiv.textContent = new Date(deliveryDate).toLocaleDateString("en-US");
+        deliveryDateDiv.textContent = new Date(task.deliveryDate).toLocaleDateString("en-US");
 
         // create delivery date section
         let deliveryDateSec = document.createElement('div');
@@ -132,17 +133,17 @@ function renderActiveTask(task) {
 
         let status = "status";
         let createStatusElement = document.createElement("h6")
-        createStatusElement.textContent = status;
+        createStatusElement.textContent = task.status;
           
         // create status button
         let activeTaskBtn = document.createElement("button");
         activeTaskBtn.className = ("active-task-btn");
-        activeTaskBtn.textContent = "active";
+        activeTaskBtn.textContent = task.status;
 
         // Create status div
         let taskStatusDiv = document.createElement('div');
         taskStatusDiv.className = "task-status";
-
+    
         // Create elements
         let ul = document.createElement("ul");
         let li = document.createElement("li");
@@ -151,17 +152,25 @@ function renderActiveTask(task) {
         // create circle icon div
         let circleDiv = document.createElement("div");
         circleDiv.className = "circle-icon";
-        circleDiv.innerHTML = circleIcon;
+        circleDiv.innerHTML = task.taskCircleIcon;
  
         // create pencil icon div
         let pencilDiv = document.createElement("button");
         pencilDiv.className = "pencil-icon";
-        pencilDiv.innerHTML = pencilIcon;
+        pencilDiv.innerHTML = task.taskPencilIcon;
  
         // create trash icon div
         let trashDiv = document.createElement("button");
         trashDiv.className = "trash-icon";
-        trashDiv.innerHTML = trashIcon;
+        trashDiv.innerHTML = task.taskTrashIcon;
+    
+    // Delete a single task 
+    trashDiv.addEventListener("click", function () {
+     li.remove(); // remove from DOM
+        deleteTaskFromLocalStorage(task.name, "activeTask"); 
+
+           location.reload();  //Update the UI
+});
 
         // create control-btn
         let controlBtn = document.createElement("div");
@@ -170,7 +179,7 @@ function renderActiveTask(task) {
         //  task name div
         let taskNameDiv = document.createElement("div");
         taskNameDiv.className = "task-name";
-        taskNameDiv.textContent = inputEntryValue.value;
+        taskNameDiv.textContent = task.name;
 
 
 
@@ -189,7 +198,7 @@ function renderActiveTask(task) {
         taskStatusDiv.appendChild(activeTaskBtn);
         li.appendChild(controlBtn);
         controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
-        pencilDiv.appendChild(pencilIcon) && trashDiv.appendChild(trashIcon);
+        
      
     
     
@@ -311,3 +320,27 @@ function addPendingTaskToList() {
 }
 
 
+
+
+
+// Save a new task
+
+ function saveTaskToLocalStorage(task, key) {
+        let tasks = JSON.parse(localStorage.getItem(key)) || [];
+        tasks.push(task);
+        localStorage.setItem(key, JSON.stringify(tasks));
+}
+
+// clear all tasks
+function clearTasksFromLocalStorage(key) {
+  localStorage.removeItem(activeTask); // delete only that category
+//   localStorage.removeItem(activeTask);  delete only that category
+}
+
+window.onload = function () {
+  let activeTasks = JSON.parse(localStorage.getItem("activeTask")) || [];
+  activeTasks.forEach(task => renderActiveTask(task));
+
+  let pendingTasks = JSON.parse(localStorage.getItem("pendingTasks")) || [];
+  pendingTasks.forEach(task => renderPendingTask(task));
+};
