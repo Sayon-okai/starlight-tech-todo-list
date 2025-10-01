@@ -48,6 +48,7 @@ const trashIcon = ` <svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
 
 activeBtn.addEventListener('click', addActiveTaskToList);
 pendingBtn.addEventListener('click', addPendingTaskToList);
+closedBtn.addEventListener('click', addClosedTaskToList);
 
 
 
@@ -389,6 +390,171 @@ function renderPendingTask(task) {
 
 }
 
+// Create closed task
+function addClosedTaskToList() {
+
+
+    // current date
+    let currentDate = new Date().toLocaleDateString("en-US");
+    let deliveryDate = new Date(deliveryDateValue.value).toLocaleDateString("en-US");
+
+    // check if inputEntryValue field is empty && if delivery date is not less then task creation date
+    if (
+   inputEntryValue.value.length > 3 ||       // task name at least 3 chars
+   deliveryDate instanceof Date &&  // valid date
+   deliveryDate >= currentDate  &&           // not before today
+   deliveryDate <= maxDate // not after 2027
+) {
+
+        const task = {
+            name: inputEntryValue.value,
+            creationDate: currentDate,
+            deliveryDate: deliveryDate,
+            status: "closed",
+            taskCircleIcon: circleIcon,
+            taskPencilIcon: pencilIcon,
+            taskTrashIcon: trashIcon,       
+       
+        }
+
+           // Render UI
+        renderPendingTask(task);
+        // Save it
+        saveTaskToLocalStorage(task, "closedTask");
+       
+    } else {
+        alert(`Please enter task in the box and make sure delivery's date is greater then or equal to today's date`)
+
+        console.log("User didn't input the correct data");
+        
+    }
+    location.reload();
+}
+
+// render closed task
+function renderClosedTask(task) {
+    // build DOM elements here (same as you did before)
+    // but instead of inputEntryValue.value, use task.name, task.creationDate, task.deliveryDate
+
+
+    // create current date element 
+    let currentDateDiv = document.createElement("div");
+    currentDateDiv.className = 'creation-date'
+    currentDateDiv.textContent = task.creationDate;
+
+    let creationDateText = "creation date";
+    let createDateElement = document.createElement("h6")
+    createDateElement.textContent = creationDateText;
+
+    // create delivery date section
+    let creationDateSec = document.createElement('div');
+    creationDateSec.className = 'creation-date-sec';
+
+
+    // Create delivery date element
+    let deliveryDateText = "delivery date";
+    let deliveryDateElement = document.createElement("h6")
+    deliveryDateElement.textContent = deliveryDateText;
+    
+    let deliveryDateDiv = document.createElement("div");
+    deliveryDateDiv.className = 'delivery-date';
+    deliveryDateDiv.textContent = new Date(task.deliveryDate).toLocaleDateString("en-US");
+
+        //  task name div
+    let taskNameDiv = document.createElement("div");
+    taskNameDiv.className = "task-name";
+    taskNameDiv.textContent = task.name;
+
+   
+    // check if date is invalid  
+    if (task.deliveryDate === "Invalid Date") {
+        deliveryDateDiv.textContent = task.deliveryDate +  "!" ;
+        deliveryDateDiv.style.color = "red";
+        deliveryDateDiv.style.fontWeight = "bold";
+        taskNameDiv.style.textDecoration = "line-through"
+    }
+    // create delivery date section
+    let deliveryDateSec = document.createElement('div');
+    deliveryDateSec.className = 'delivery-date-sec';
+
+       
+    let createStatusElement = document.createElement("h6")
+    createStatusElement.textContent = task.status;
+          
+    // create status button
+    let pendingTaskBtn = document.createElement("button");
+    pendingTaskBtn.className = ("closed-task-btn");
+    pendingTaskBtn.textContent = task.status;
+
+    // Create status div
+    let taskStatusDiv = document.createElement('div');
+    taskStatusDiv.className = "task-status";
+    
+    // Create elements
+    let ul = document.createElement("ul");
+    let li = document.createElement("li");
+    li.className = "task";
+ 
+    // create circle icon div
+    let circleDiv = document.createElement("div");
+    circleDiv.className = "circle-icon";
+    circleDiv.innerHTML = task.taskCircleIcon;
+ 
+    // create pencil icon div
+    let pencilDiv = document.createElement("button");
+    pencilDiv.className = "pencil-icon";
+    pencilDiv.innerHTML = task.taskPencilIcon;
+ 
+    // create trash icon div
+    let trashDiv = document.createElement("button");
+    trashDiv.className = "trash-icon";
+    trashDiv.innerHTML = task.taskTrashIcon;
+    
+    // Delete a single task 
+    trashDiv.addEventListener("click", function () {
+        li.remove(); // remove from DOM
+        deleteTaskFromLocalStorage(task.name, "closedTask");
+
+        location.reload();  //Update the UI
+    });
+
+     // edit a single task 
+    pencilDiv.addEventListener("click", function () {
+        inputEntryValue.value = task.name; // get task name to input task name 
+        deleteTaskFromLocalStorage(task.name, "closedTask"); 
+        // location.reload();  //Update the UI
+      
+     
+});
+
+    // create control-btn
+    let controlBtn = document.createElement("div");
+    controlBtn.className = "control-btn";
+    
+
+    closedTask.appendChild(ul);
+    ul.appendChild(circleDiv);
+    ul.appendChild(li);
+    li.appendChild(taskNameDiv);
+    li.appendChild(creationDateSec);
+    creationDateSec.appendChild(createDateElement);
+    creationDateSec.appendChild(currentDateDiv);
+    li.appendChild(deliveryDateSec);
+    deliveryDateSec.appendChild(deliveryDateElement);
+    deliveryDateSec.appendChild(deliveryDateDiv)
+    li.appendChild(taskStatusDiv);
+    taskStatusDiv.appendChild(createStatusElement);
+    taskStatusDiv.appendChild(pendingTaskBtn);
+    li.appendChild(controlBtn);
+    controlBtn.appendChild(pencilDiv) && controlBtn.appendChild(trashDiv);
+        
+     
+    
+    
+    inputEntryValue.value = "";   // clear text input
+    deliveryDateValue.value = ""; // clear date input
+
+}
 // Save a new task
 
  function saveTaskToLocalStorage(task, key) {
