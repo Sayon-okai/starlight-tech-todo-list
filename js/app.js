@@ -91,7 +91,7 @@ if (
         
     }
 
-      
+    location.reload();
    
 }
 
@@ -181,6 +181,14 @@ function renderActiveTask(task) {
            location.reload();  //Update the UI
 });
 
+     // edit a single task 
+    pencilDiv.addEventListener("click", function () {
+        inputEntryValue.value = task.name; // get task name to input task name 
+        deleteTaskFromLocalStorage(task.name, "activeTask"); 
+        // location.reload();  //Update the UI
+      
+     
+});
         // create control-btn
         let controlBtn = document.createElement("div");
         controlBtn.className = "control-btn";
@@ -253,6 +261,7 @@ function addPendingTaskToList() {
         console.log("User didn't input the correct data");
         
     }
+    location.reload();
 }
 
 // render pending task
@@ -342,6 +351,15 @@ function renderPendingTask(task) {
         location.reload();  //Update the UI
     });
 
+     // edit a single task 
+    pencilDiv.addEventListener("click", function () {
+        inputEntryValue.value = task.name; // get task name to input task name 
+        deleteTaskFromLocalStorage(task.name, "pendingTask"); 
+        // location.reload();  //Update the UI
+      
+     
+});
+
     // create control-btn
     let controlBtn = document.createElement("div");
     controlBtn.className = "control-btn";
@@ -370,7 +388,6 @@ function renderPendingTask(task) {
     deliveryDateValue.value = ""; // clear date input
 
 }
-
 
 // Save a new task
 
@@ -404,6 +421,20 @@ function deleteTaskFromLocalStorage(taskName, key) {
   // filter out the task by name
   tasks = tasks.filter(task => task.name !== taskName);
 
+  // save back to localStorage
+  localStorage.setItem(key, JSON.stringify(tasks));
+}
+
+
+
+// Get the element from the array and update it in the input field
+function editTaskFromLocalStorage(taskName, key) {
+    let tasks = JSON.parse(localStorage.getItem(key))
+   
+  // filter out the task by name
+  tasks = tasks.filter(task => task.name !== taskName);
+
+     inputEntryValue.value = tasks;
   // save back to localStorage
   localStorage.setItem(key, JSON.stringify(tasks));
 }
