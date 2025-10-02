@@ -2,6 +2,17 @@
 
 - This is a basic ToDO list app built to test my js skill
 
+# languages 
+- HTML
+- CSS
+- JS
+
+# Tools Use
+- VS Code IDE
+- Git
+- CSS flexbox
+- Macbook Pro 
+
 # Author
 
 - Name: Sayon T. Okai
